@@ -65,14 +65,38 @@ public class ReadNfcActivity extends AppCompatActivity {
             tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             assert tag != null;
             byte[] payload = detectTagData(tag).getBytes();
+            String nfc_id = bytesToHexString(payload);
 
-            nfcScanned(tag);
+            nfcScanned(nfc_id);
         }
     }
 
-    private void nfcScanned(Tag tag) {
-        NFC_textView.setText("FOUND SOMETHING!!\n" + tag);
+    //TODO: DO STUFF IN THIS METHOD
+    private void nfcScanned(String str) {
+        NFC_textView.setText("FOUND SOMETHING!!\n" + str);
     }
+
+    /*
+    Method to turn bytes into String https://stackoverflow.com/questions/6060312/how-do-you-read-the-unique-id-of-an-nfc-tag-on-android
+     */
+    private String bytesToHexString(byte[] src) {
+        StringBuilder stringBuilder = new StringBuilder("0x");
+        if (src == null || src.length <= 0) {
+            return null;
+        }
+
+        char[] buffer = new char[2];
+        for (int i = 0; i < src.length; i++) {
+            buffer[0] = Character.forDigit((src[i] >>> 4) & 0x0F, 16);
+            buffer[1] = Character.forDigit(src[i] & 0x0F, 16);
+            System.out.println(buffer);
+            stringBuilder.append(buffer);
+        }
+
+        return stringBuilder.toString();
+    }
+
+    //BELOW THIS IS PROBABLY NOT NEEDED
 
     private String detectTagData(Tag tag) {
         StringBuilder sb = new StringBuilder();
