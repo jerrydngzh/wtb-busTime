@@ -58,19 +58,20 @@ public class ReadNfcActivity extends AppCompatActivity {
 
     private void resolveIntent(Intent intent) {
         String action = intent.getAction();
+        Tag tag;
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
-            Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             assert tag != null;
             byte[] payload = detectTagData(tag).getBytes();
 
-            nfcScanned(payload);
+            nfcScanned(tag);
         }
     }
 
-    private void nfcScanned(byte[] payload) {
-        NFC_textView.setText("FOUND SOMETHING!!\n" + payload);
+    private void nfcScanned(Tag tag) {
+        NFC_textView.setText("FOUND SOMETHING!!\n" + tag);
     }
 
     private String detectTagData(Tag tag) {
