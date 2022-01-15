@@ -16,6 +16,7 @@
 
         <activity
             android:name=".view.ReadNfcActivity"
+            android:launchMode="singleTask"
             android:exported="false" />
         <activity
             android:name=".view.ListStopsActivity"
