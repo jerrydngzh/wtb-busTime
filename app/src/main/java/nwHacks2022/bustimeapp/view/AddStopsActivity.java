@@ -36,6 +36,7 @@ public class AddStopsActivity extends AppCompatActivity {
             saveStop();
         }
 
+        // TODO
         if (item.getItemId() == R.id.item_delete) {
         }
         return super.onOptionsItemSelected(item);
@@ -53,7 +54,6 @@ public class AddStopsActivity extends AppCompatActivity {
         doEdit = intent.getBooleanExtra(EXTRA_DO_EDIT, false);
 
     }
-
 
     private void saveStop() {
         EditText stopName = findViewById(R.id.stop_name_field);
@@ -80,6 +80,7 @@ public class AddStopsActivity extends AppCompatActivity {
 
     }
 
+    // TODO - unused!
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddStopsActivity.class);
     }

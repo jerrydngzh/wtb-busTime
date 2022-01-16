@@ -17,12 +17,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.security.PublicKey;
 
 import nwHacks2022.bustimeapp.R;
 import nwHacks2022.bustimeapp.controller.StopManager;
@@ -45,12 +42,9 @@ public class ListStopsActivity extends AppCompatActivity {
 
     private void setUpListTap() {
         ListView stopList = findViewById(R.id.stops_listview);
-        stopList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
-                startActivity(editStop);
-            }
+        stopList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
+            startActivity(editStop);
         });
     }
 
@@ -67,7 +61,7 @@ public class ListStopsActivity extends AppCompatActivity {
     private class StopListAdapter extends ArrayAdapter<BusStop> {
 
         public StopListAdapter() {
-            super(ListStopsActivity.this, R.layout.layout_bus_list, stopManager.getAll());
+            super(ListStopsActivity.this, R.layout.bus_stop_item, stopManager.getAll());
         }
         @NonNull
         @Override
@@ -75,7 +69,7 @@ public class ListStopsActivity extends AppCompatActivity {
             View itemView = convertView;
             BusStop currentStop = stopManager.get(position);
             if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.layout_bus_list, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.bus_stop_item, parent, false);
             }
 
             Button textBus = itemView.findViewById(R.id.text_bus_btn);

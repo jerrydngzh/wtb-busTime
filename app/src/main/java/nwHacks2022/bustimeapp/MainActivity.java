@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sp;
 
     public static final String STOPS_SAVE_SP = "stopsSave";
-    public static final String STOP_SAVENAME = "JsonStops";
+    public static final String STOP_SAVE_NAME = "JsonStops";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public String load() {
                 sp = getApplicationContext().getSharedPreferences(STOPS_SAVE_SP, MODE_PRIVATE);
-                return sp.getString(STOP_SAVENAME, "");
+                return sp.getString(STOP_SAVE_NAME, "");
             }
 
             @Override
             public void save(String saveJson) {
                 sp = getApplicationContext().getSharedPreferences(STOPS_SAVE_SP, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putString(STOP_SAVENAME, saveJson);
+                editor.putString(STOP_SAVE_NAME, saveJson);
                 editor.apply();
             }
         });
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadStops() {
         StopManager stopManager = StopManager.getInstance();
         sp = this.getSharedPreferences(STOPS_SAVE_SP, Context.MODE_PRIVATE);
-        stopManager.fromJson(sp.getString(STOP_SAVENAME, ""));
+        stopManager.fromJson(sp.getString(STOP_SAVE_NAME, ""));
     }
 
     private void setUpButtons() {
