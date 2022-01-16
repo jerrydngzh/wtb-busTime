@@ -382,10 +382,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, MainActivity.class);
-    }
-
     public static PendingIntent makePendingIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
