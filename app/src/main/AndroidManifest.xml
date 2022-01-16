@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nwHacks2022.bustimeapp">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature android:name="android.hardware.nfc"
         android:required="true"/>
@@ -23,6 +24,9 @@
             android:exported="false" />
         <activity
             android:name=".view.AddStopsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.LocationFeaturesActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
