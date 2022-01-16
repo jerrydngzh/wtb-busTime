@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         Button sendSMSBtn = findViewById(R.id.send_sms);
         sendSMSBtn.setOnClickListener(v -> sendSMSMessage());
     }
-
     // TODO - move to ListStopsActivity -> call on onClickCallBack() for listView Items
     protected void sendSMSMessage() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -89,5 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             }
         }
+
     }
 }
