@@ -59,10 +59,11 @@ public class StopManager {
 
     public void deleteStop(BusStop toDelete) {
         for (BusStop bs : busStops) {
-            if (bs.equals(toDelete)) {
+            if (bs.getId().equals(toDelete.getId())) {
                 busStops.remove(bs);
             }
         }
+        save();
     }
 
     public void setSaveOption(SaveManager saveInterface) {

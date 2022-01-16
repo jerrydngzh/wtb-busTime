@@ -52,6 +52,12 @@ public class ListStopsActivity extends AppCompatActivity {
         createOnClickCallBack();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateBusStopListView();
+    }
+
     private void getExtras() {
         Intent intent = getIntent();
         if (intent.getBooleanExtra(EXTRA_TEMP_LIST, false)) {
@@ -89,12 +95,7 @@ public class ListStopsActivity extends AppCompatActivity {
             sendSMSMessage(busStop.getBusStop() + " " + busStop.getBusNumber());
 
             Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
-            editStop.putExtra("name", busStop.getName());
-            editStop.putExtra("stopNum", busStop.getBusNumber());
-            editStop.putExtra("busStop", busStop.getBusStop());
-            editStop.putExtra("latitude", busStop.getLatitude());
-            editStop.putExtra("longitude", busStop.getLongitude());
-            editStop.putExtra("doEdit", true);
+            editStop.putExtra("busStop", busStop);
             startActivity(editStop);
             //overridePendingTransition(0, 0);
         });
