@@ -47,7 +47,7 @@ public class BusStop {
 
     public String getTextMessage() {
         String textFormat = "%d %d";
-        return String.format(Locale.CANADA, textFormat, busNumber, busStop);
+        return String.format(Locale.CANADA, textFormat, busStop, busNumber);
     }
 
     public String getLongitude() {
