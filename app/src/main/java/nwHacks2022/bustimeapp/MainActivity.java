@@ -39,5 +39,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), ReadNfcActivity.class);
             startActivity(intent);
         });
+
+
     }
 }
