@@ -67,13 +67,13 @@ public class ReadNfcActivity extends AppCompatActivity {
             byte[] payload = detectTagData(tag).getBytes();
             String nfc_id = bytesToHexString(payload);
 
-            nfcScanned(nfc_id);
+            nfcScanned(nfc_id, tag);
         }
     }
 
     //TODO: DO STUFF IN THIS METHOD
-    private void nfcScanned(String str) {
-        NFC_textView.setText("FOUND SOMETHING!!\n" + str);
+    private void nfcScanned(String str, Tag tag) {
+        NFC_textView.setText("FOUND SOMETHING!!\n" + str + "\n" + tag);
     }
 
     /*
