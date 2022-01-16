@@ -1,39 +1,40 @@
 package nwHacks2022.bustimeapp.model;
 
 import java.util.Locale;
+import java.util.UUID;
 
 public class BusStop {
     String name;
-    int busNumber;
-    int busStop;
+    String busNumber;
+    String busStop;
 
     String latitude;
     String longitude;
 
-    String nfcCode;
+    String id = UUID.randomUUID().toString();
 
-    public BusStop(String name, int busNumber, int busStop, String latitude, String longitude, String nfcCode) {
+
+    public BusStop(String name, String busNumber, String busStop, String latitude, String longitude) {
         this.name = name;
         this.busNumber = busNumber;
         this.busStop = busStop;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.nfcCode = nfcCode;
     }
 
-    public int getBusNumber() {
+    public String getBusNumber() {
         return busNumber;
     }
 
-    public void setBusNumber(int busNumber) {
+    public void setBusNumber(String busNumber) {
         this.busNumber = busNumber;
     }
 
-    public int getBusStop() {
+    public String getBusStop() {
         return busStop;
     }
 
-    public void setBusStop(int busStop) {
+    public void setBusStop(String busStop) {
         this.busStop = busStop;
     }
 
@@ -63,8 +64,7 @@ public class BusStop {
         this.latitude = latitude;
     }
 
-
     public String getId() {
-        return nfcCode;
+        return id;
     }
 }
