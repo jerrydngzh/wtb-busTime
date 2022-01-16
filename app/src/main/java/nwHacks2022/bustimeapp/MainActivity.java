@@ -1,7 +1,5 @@
 package nwHacks2022.bustimeapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +7,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setUpSaving();
+        // TODO -- deserializing/serializing failing on empty string
+//        setUpSaving();
         setUpButtons();
-        loadStops();
+//        loadStops();
     }
 
     private void setUpSaving() {
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         stopManager.load();
     }
 
-
     private void loadStops() {
         StopManager stopManager = StopManager.getInstance();
         sp = this.getSharedPreferences(STOPS_SAVE_SP, Context.MODE_PRIVATE);
@@ -69,44 +69,47 @@ public class MainActivity extends AppCompatActivity {
         addStopButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), AddStopsActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         Button listStopButton = findViewById(R.id.list_stops_btn);
         listStopButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ListStopsActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         Button readNfcButton = findViewById(R.id.read_nfc_btn);
         readNfcButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ReadNfcActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         Button locationFeaturesButton = findViewById(R.id.find_location_btn);
         locationFeaturesButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), LocationFeaturesActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         Button nearbyButton = findViewById(R.id.nearby_stops_btn);
-        nearbyButton.setOnClickListener(v -> {
-            getNearbyStops();
-
-        });
+        nearbyButton.setOnClickListener(v -> getNearbyStops());
     }
 
     private void getNearbyStops() {
         StopFinder stopFinder = new StopFinder(getCurrentLocation());
         ArrayList<BusStop> nearby = stopFinder.findSavedStops();
         if (nearby.isEmpty()) {
-            Toast.makeText(this, "No nearby stops found!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No nearby stops found!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (nearby.size() == 1) {
             //TODO: don't open the activity just send the text of the only nearby bus
+
         } else {
             startActivity(ListStopsActivity.makeIntent(this, nearby));
+            overridePendingTransition(0,0);
         }
     }
 

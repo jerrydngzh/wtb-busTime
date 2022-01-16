@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import nwHacks2022.bustimeapp.R;
 import nwHacks2022.bustimeapp.controller.StopManager;
@@ -29,15 +29,13 @@ import nwHacks2022.bustimeapp.controller.TempStopManager;
 import nwHacks2022.bustimeapp.model.BusStop;
 
 public class ListStopsActivity extends AppCompatActivity {
+    private final StopManager stopManager = StopManager.getInstance();
     private static final String EXTRA_STOPS_TO_SHOW = "stopsList";
     private static final String EXTRA_TEMP_LIST = "doTempList";
 
-    private final StopManager stopManager = StopManager.getInstance();
     private TempStopManager tempStopManager = null;
 
     private boolean doTempList = false;
-
-
 
     public static final String BUS_NUMBER = "33333";
     private String message;
@@ -46,11 +44,12 @@ public class ListStopsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_stops);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         getExtras();
-        showStops();
+        populateBusStopListView();
         if (!doTempList) {
-            setUpListTap();
+            createOnClickCallBack();
         }
     }
 
@@ -62,15 +61,36 @@ public class ListStopsActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpListTap() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        overridePendingTransition(0, 0);
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
+
+    private void createOnClickCallBack() {
         ListView stopList = findViewById(R.id.stops_listview);
+
+        // TODO -- do we want this to be click the listview item and send the SMS and have an edit mode to trigger the Intent for EditActivity (could use the menu nav bar to configure)
         stopList.setOnItemClickListener((parent, view, position, id) -> {
+
+            // TODO ?
+//            BusStop busStop = stopManager.get(position);
+//            sendSMSMessage(busStop.getBusStop() + " " + busStop.getBusNumber());
+
             Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
             startActivity(editStop);
+            overridePendingTransition(0, 0);
         });
     }
 
-    private void showStops() {
+    private void populateBusStopListView() {
         ArrayAdapter<BusStop> stopAdapter;
         if (doTempList) {
             stopAdapter = new StopListAdapter(tempStopManager.getAll());
@@ -81,6 +101,7 @@ public class ListStopsActivity extends AppCompatActivity {
         busList.setAdapter(stopAdapter);
     }
 
+    // TODO - unused
     public static Intent makeIntent(Context context) {
         return new Intent(context, ListStopsActivity.class);
     }
@@ -99,18 +120,24 @@ public class ListStopsActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.bus_stop_item, parent, false);
             }
 
-            Button textBus = itemView.findViewById(R.id.text_bus_btn);
-            textBus.setOnClickListener(v -> sendSMSMessage(currentStop.getTextMessage()));
+            // Set Bus Stop Address Name
+            TextView busStopAddress = itemView.findViewById(R.id.busStopAddress);
+            busStopAddress.setText(currentStop.getName());
 
-            TextView nameView = itemView.findViewById(R.id.layout_bus_name);
-            nameView.setText(currentStop.getName());
+            // Set Bus Stop Number
+            TextView busStopNum = itemView.findViewById(R.id.busStopNumber);
+            busStopNum.setText(currentStop.getBusStop());
+
+            // Setup Bus Stop Bus Number
+            TextView busNum = itemView.findViewById(R.id.busNumber);
+            busNum.setText(currentStop.getBusNumber());
 
             return itemView;
         }
 
     }
 
-
+    // TODO - called from createOnClickCallBack() when implemented
     protected void sendSMSMessage(String busCode) {
         message = busCode;
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
