@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -21,7 +22,11 @@ import nwHacks2022.bustimeapp.model.BusStop;
 
 public class AddStopsActivity extends AppCompatActivity {
 
+    private static final String EXTRA_DO_EDIT = "doEdit";
+    private static final String EXTRA_STOP_POSITION = "position";
+
     StopManager stopManager = StopManager.getInstance();
+    boolean doEdit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,14 @@ public class AddStopsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.save_delete_appbar, menu);
         return true;
     }
+
+    private void getExtras() {
+        //TODO: get editing stops working.
+        Intent intent = getIntent();
+        doEdit = intent.getBooleanExtra(EXTRA_DO_EDIT, false);
+
+    }
+
 
     private void saveStop() {
         EditText stopName = findViewById(R.id.stop_name_field);
@@ -78,6 +91,10 @@ public class AddStopsActivity extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context, int index) {
-        return new Intent(context, AddStopsActivity.class);
+        Intent editStopIntent = new Intent(context, AddStopsActivity.class);
+        editStopIntent.putExtra(EXTRA_DO_EDIT, true);
+        editStopIntent.putExtra(EXTRA_STOP_POSITION, index);
+
+        return editStopIntent;
     }
 }

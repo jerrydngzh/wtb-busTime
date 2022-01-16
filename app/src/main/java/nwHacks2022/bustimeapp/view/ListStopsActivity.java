@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,9 +27,19 @@ public class ListStopsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_stops);
 
-        stopManager.add(new BusStop("Hello", 10, 10, "1--", "100", "00"));
-
         showStops();
+        setUpListTap();
+    }
+
+    private void setUpListTap() {
+        ListView stopList = findViewById(R.id.stops_listview);
+        stopList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
+                startActivity(editStop);
+            }
+        });
     }
 
     private void showStops() {
