@@ -5,4 +5,13 @@
     <string name="add_stop">Add Stop</string>
     <string name="send_sms_txt">SEND SMS</string>
     <string name="phone_num_txt_placeholder">(xxx)-xxx-xxxx</string>
+    <string name="find_location_txt">Find Location</string>
+    <string name="bus_stop_location_labal">Bus Stop Location:</string>
+    <string name="longitude_label">Longitude</string>
+    <string name="latitude_label">Latitude</string>
+    <string name="bus_numbers_label">Bus Number(s):</string>
+    <string name="bus_stop_number_label">Bus Stop Number:</string>
+    <string name="default_text">DEFAULT TEXT</string>
+    <string name="edit_text_hint_num">####</string>
+    <string name="edit_text_hint_address">Address XX @ Address YY</string>
 </resources>

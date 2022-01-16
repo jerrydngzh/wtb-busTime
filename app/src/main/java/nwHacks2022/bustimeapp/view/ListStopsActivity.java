@@ -96,7 +96,7 @@ public class ListStopsActivity extends AppCompatActivity {
             View itemView = convertView;
             BusStop currentStop = stopManager.get(position);
             if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.layout_bus_list, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.bus_stop_item, parent, false);
             }
 
             Button textBus = itemView.findViewById(R.id.text_bus_btn);
