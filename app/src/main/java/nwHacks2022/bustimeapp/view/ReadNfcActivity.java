@@ -1,7 +1,5 @@
 package nwHacks2022.bustimeapp.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +9,13 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Objects;
 
 import nwHacks2022.bustimeapp.R;
 
@@ -28,6 +31,9 @@ public class ReadNfcActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_nfc);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         pendingIntent = makePendingIntent(ReadNfcActivity.this);
         NFC_textView = findViewById(R.id.nfc_textView);
 
@@ -54,6 +60,19 @@ public class ReadNfcActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         setIntent(intent);
         resolveIntent(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        overridePendingTransition(0, 0);
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 
     private void resolveIntent(Intent intent) {
@@ -86,9 +105,9 @@ public class ReadNfcActivity extends AppCompatActivity {
         }
 
         char[] buffer = new char[2];
-        for (int i = 0; i < src.length; i++) {
-            buffer[0] = Character.forDigit((src[i] >>> 4) & 0x0F, 16);
-            buffer[1] = Character.forDigit(src[i] & 0x0F, 16);
+        for (byte b : src) {
+            buffer[0] = Character.forDigit((b >>> 4) & 0x0F, 16);
+            buffer[1] = Character.forDigit(b & 0x0F, 16);
             System.out.println(buffer);
             stringBuilder.append(buffer);
         }

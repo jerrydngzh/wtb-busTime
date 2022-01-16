@@ -1,31 +1,27 @@
 package nwHacks2022.bustimeapp.view;
 
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Tasks;
-//import com.google.android.gms.common.api.GoogleApiClient;
-
-
 import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
 import android.widget.TextView;
-
-import nwHacks2022.bustimeapp.R;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.Objects;
+
+import nwHacks2022.bustimeapp.R;
+
+//import com.google.android.gms.common.api.GoogleApiClient;
 
 
 public class LocationFeaturesActivity extends AppCompatActivity {
@@ -36,6 +32,8 @@ public class LocationFeaturesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_features);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         LocationRequest locationRequest = LocationRequest.create()
                 .setInterval(100)
@@ -75,6 +73,8 @@ public class LocationFeaturesActivity extends AppCompatActivity {
         });
     }
 
+
+    // TODO - clean code if not used @Edward
 //    @Override
 //    protected void onStart() {
 //        googleApiClient.connect();
@@ -85,5 +85,18 @@ public class LocationFeaturesActivity extends AppCompatActivity {
 //        googleApiClient.connect();
 //        super.onStop();
 //    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        overridePendingTransition(0, 0);
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
 
 }

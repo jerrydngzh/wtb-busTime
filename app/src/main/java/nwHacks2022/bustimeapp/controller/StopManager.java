@@ -1,16 +1,19 @@
 package nwHacks2022.bustimeapp.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import nwHacks2022.bustimeapp.model.BusStop;
 
 public class StopManager {
-    private final HashMap<String, BusStop> busStops = new HashMap<>();
+    private ArrayList<BusStop> busStops = new ArrayList<>();
     public static StopManager instance;
 
-    private StopManager() {
+    private SaveManager saveOption;
 
+    private StopManager() {
     }
 
     public static StopManager getInstance() {
@@ -21,18 +24,46 @@ public class StopManager {
     }
 
     public void add(BusStop busStop) {
-        busStops.put(busStop.getId(),busStop);
+        busStops.add(busStop);
+        save();
     }
 
     public ArrayList<BusStop> getAll() {
-        return new ArrayList<>(busStops.values());
+        return busStops;
     }
 
     public BusStop get(int position) {
         return getAll().get(position);
     }
 
-    public BusStop findById(String id) {
-        return busStops.get(id);
+
+    public void fromJson(String jsonString) {
+        Gson gson = new Gson();
+        if (!(jsonString.isEmpty())) {
+            busStops = gson.fromJson(jsonString, new TypeToken<ArrayList<BusStop>>() {}.getType());
+        }
+    }
+
+    private String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(busStops);
+    }
+
+    private void save() {
+        saveOption.save(toJson());
+    }
+
+    public void load() {
+        fromJson(saveOption.load());
+    }
+
+
+    public void setSaveOption(SaveManager saveInterface) {
+        saveOption = saveInterface;
+    }
+
+    public interface SaveManager {
+        String load();
+        void save(String saveJson);
     }
 }
