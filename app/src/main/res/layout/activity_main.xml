@@ -69,5 +69,16 @@
             android:text="@string/list_stops"
             tools:ignore="TextContrastCheck" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15sp" />
+
+        <Button
+            android:id="@+id/nearby_stops_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nearby_stops"
+            tools:ignore="TextContrastCheck" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

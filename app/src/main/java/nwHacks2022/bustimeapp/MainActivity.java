@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        Button nearbyButton = findViewById(R.id.nearby_stops_button);
+        Button nearbyButton = findViewById(R.id.nearby_stops_btn);
         nearbyButton.setOnClickListener(v -> {
             getNearbyStops();
 

@@ -88,7 +88,7 @@ public class ListStopsActivity extends AppCompatActivity {
     private class StopListAdapter extends ArrayAdapter<BusStop> {
 
         public StopListAdapter(ArrayList<BusStop> stops) {
-            super(ListStopsActivity.this, R.layout.layout_bus_list, stops);
+            super(ListStopsActivity.this, R.layout.bus_stop_item, stops);
         }
         @NonNull
         @Override
