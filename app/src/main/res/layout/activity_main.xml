@@ -25,30 +25,29 @@
         android:text="@string/add_stop"
         app:layout_constraintBottom_toTopOf="@+id/read_nfc_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/read_nfc_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/read_nfc"
         app:layout_constraintBottom_toTopOf="@+id/list_stops_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/list_stops_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="152dp"
         android:text="@string/list_stops"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,7 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_stops_btn"
         app:layout_constraintVertical_bias="0.414" />
-        app:layout_constraintTop_toBottomOf="@+id/read_nfc_btn" />
+    app:layout_constraintTop_toBottomOf="@+id/read_nfc_btn" />
 
     <Button
         android:id="@+id/send_sms"
@@ -72,6 +71,17 @@
         android:text="@string/send_sms_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_stops_btn" />
+
+    <Button
+        android:id="@+id/nearby_stops_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Nearby"
+        app:layout_constraintBottom_toTopOf="@+id/find_location_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_stops_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -69,7 +69,7 @@ public class AddStopsActivity extends AppCompatActivity {
             String busNum = busNo.getText().toString();
             String busStop = busStopNo.getText().toString();
 
-            stopManager.add(new BusStop(name, busNum, busStop, latitude, longitude));
+            stopManager.add(new BusStop(name, busNum, busStop, Double.parseDouble(latitude), Double.parseDouble(longitude)));
             finish();
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(AddStopsActivity.this)

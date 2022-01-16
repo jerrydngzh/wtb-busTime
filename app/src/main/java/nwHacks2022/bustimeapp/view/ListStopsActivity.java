@@ -1,11 +1,5 @@
 package nwHacks2022.bustimeapp.view;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -17,19 +11,33 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.security.PublicKey;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
 
 import nwHacks2022.bustimeapp.R;
 import nwHacks2022.bustimeapp.controller.StopManager;
+import nwHacks2022.bustimeapp.controller.TempStopManager;
 import nwHacks2022.bustimeapp.model.BusStop;
 
 public class ListStopsActivity extends AppCompatActivity {
-    private StopManager stopManager = StopManager.getInstance();
+    private static final String EXTRA_STOPS_TO_SHOW = "stopsList";
+    private static final String EXTRA_TEMP_LIST = "doTempList";
+
+    private final StopManager stopManager = StopManager.getInstance();
+    private TempStopManager tempStopManager = null;
+
+    private boolean doTempList = false;
+
+
 
     public static final String BUS_NUMBER = "33333";
     private String message;
@@ -39,23 +47,36 @@ public class ListStopsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_stops);
 
+        getExtras();
         showStops();
-        setUpListTap();
+        if (!doTempList) {
+            setUpListTap();
+        }
+    }
+
+    private void getExtras() {
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra(EXTRA_TEMP_LIST, false)) {
+            tempStopManager = intent.getParcelableExtra(EXTRA_STOPS_TO_SHOW);
+            doTempList = true;
+        }
     }
 
     private void setUpListTap() {
         ListView stopList = findViewById(R.id.stops_listview);
-        stopList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
-                startActivity(editStop);
-            }
+        stopList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
+            startActivity(editStop);
         });
     }
 
     private void showStops() {
-        ArrayAdapter<BusStop> stopAdapter = new StopListAdapter();
+        ArrayAdapter<BusStop> stopAdapter;
+        if (doTempList) {
+            stopAdapter = new StopListAdapter(tempStopManager.getAll());
+        } else {
+            stopAdapter = new StopListAdapter(stopManager.getAll());
+        }
         ListView busList = findViewById(R.id.stops_listview);
         busList.setAdapter(stopAdapter);
     }
@@ -66,8 +87,8 @@ public class ListStopsActivity extends AppCompatActivity {
 
     private class StopListAdapter extends ArrayAdapter<BusStop> {
 
-        public StopListAdapter() {
-            super(ListStopsActivity.this, R.layout.layout_bus_list, stopManager.getAll());
+        public StopListAdapter(ArrayList<BusStop> stops) {
+            super(ListStopsActivity.this, R.layout.layout_bus_list, stops);
         }
         @NonNull
         @Override
@@ -116,5 +137,13 @@ public class ListStopsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public static Intent makeIntent(Context context, ArrayList<BusStop> stopsToShow) {
+        TempStopManager tempStopManager = new TempStopManager(stopsToShow);
+        Intent listStopsIntent = new Intent(context, ListStopsActivity.class);
+        listStopsIntent.putExtra(EXTRA_STOPS_TO_SHOW, tempStopManager);
+        listStopsIntent.putExtra(EXTRA_TEMP_LIST, true);
+        return listStopsIntent;
     }
 }
