@@ -26,6 +26,9 @@
             android:name=".view.AddStopsActivity"
             android:exported="false" />
         <activity
+            android:name=".view.LocationFeaturesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
