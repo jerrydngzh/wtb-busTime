@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import nwHacks2022.bustimeapp.view.AddStopsActivity;
 import nwHacks2022.bustimeapp.view.ListStopsActivity;
+import nwHacks2022.bustimeapp.view.LocationFeaturesActivity;
 import nwHacks2022.bustimeapp.view.ReadNfcActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
         Button readNfcButton = findViewById(R.id.read_nfc_btn);
         readNfcButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ReadNfcActivity.class);
+            startActivity(intent);
+        });
+
+        Button locationFeaturesButton = findViewById(R.id.find_location_btn);
+        locationFeaturesButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), LocationFeaturesActivity.class);
             startActivity(intent);
         });
     }
