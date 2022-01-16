@@ -21,7 +21,7 @@ public class StopManager {
     }
 
     public void add(BusStop busStop) {
-        busStops.put(busStop.getId(),busStop);
+//        busStops.put(busStop.getId(),busStop);
     }
 
     public ArrayList<BusStop> getAll() {

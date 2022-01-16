@@ -10,15 +10,12 @@ public class BusStop {
     String latitude;
     String longitude;
 
-    String nfcCode;
-
-    public BusStop(String name, int busNumber, int busStop, String latitude, String longitude, String nfcCode) {
+    public BusStop(String name, int busNumber, int busStop, String latitude, String longitude) {
         this.name = name;
         this.busNumber = busNumber;
         this.busStop = busStop;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.nfcCode = nfcCode;
     }
 
     public int getBusNumber() {
@@ -61,10 +58,5 @@ public class BusStop {
     public void setCoords(String longitude, String latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
-    }
-
-
-    public String getId() {
-        return nfcCode;
     }
 }

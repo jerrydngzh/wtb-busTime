@@ -6,15 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import org.w3c.dom.Text;
 
 import nwHacks2022.bustimeapp.R;
 import nwHacks2022.bustimeapp.controller.StopManager;
@@ -40,6 +36,7 @@ public class AddStopsActivity extends AppCompatActivity {
             saveStop();
         }
 
+        // TODO
         if (item.getItemId() == R.id.item_delete) {
         }
         return super.onOptionsItemSelected(item);
@@ -58,10 +55,8 @@ public class AddStopsActivity extends AppCompatActivity {
 
     }
 
-
     private void saveStop() {
         EditText stopName = findViewById(R.id.stop_name_field);
-        TextView nfcCode = findViewById(R.id.nfc_info_text);
         EditText lat = findViewById(R.id.lat_field);
         EditText lon = findViewById(R.id.long_field);
         EditText busNo = findViewById(R.id.bus_number_field);
@@ -69,13 +64,12 @@ public class AddStopsActivity extends AppCompatActivity {
 
         try {
             String name = stopName.getText().toString();
-            String id = nfcCode.getText().toString();
             String latitude = lat.getText().toString();
             String longitude = lon.getText().toString();
             String busNum = busNo.getText().toString();
             String busStop = busStopNo.getText().toString();
 
-            stopManager.add(new BusStop(name, Integer.parseInt(busNum), Integer.parseInt(busStop), latitude, longitude, id));
+            stopManager.add(new BusStop(name, Integer.parseInt(busNum), Integer.parseInt(busStop), latitude, longitude));
             finish();
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(AddStopsActivity.this)
@@ -86,6 +80,7 @@ public class AddStopsActivity extends AppCompatActivity {
 
     }
 
+    // TODO - unused!
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddStopsActivity.class);
     }

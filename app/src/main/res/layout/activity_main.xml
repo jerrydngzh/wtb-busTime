@@ -15,7 +15,8 @@
         app:layout_constraintBottom_toTopOf="@+id/read_nfc_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/read_nfc_btn"
@@ -24,7 +25,8 @@
         android:layout_marginStart="16dp"
         android:text="@string/read_nfc"
         app:layout_constraintBottom_toTopOf="@+id/find_location_btn"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/find_location_btn"
@@ -34,7 +36,8 @@
         android:layout_marginBottom="16dp"
         android:text="@string/find_location_txt"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -52,7 +55,8 @@
             android:id="@+id/add_stop_btn"
             android:layout_width="300sp"
             android:layout_height="wrap_content"
-            android:text="@string/add_stop" />
+            android:text="@string/add_stop"
+            tools:ignore="TextContrastCheck" />
 
         <Space
             android:layout_width="match_parent"
@@ -62,7 +66,8 @@
             android:id="@+id/list_stops_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/list_stops" />
+            android:text="@string/list_stops"
+            tools:ignore="TextContrastCheck" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
