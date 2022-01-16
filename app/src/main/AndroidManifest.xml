@@ -19,15 +19,6 @@
             android:name=".view.ReadNfcActivity"
             android:launchMode="singleTask"
             android:exported="false" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"
-                android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity
             android:name=".view.ListStopsActivity"
@@ -41,15 +32,15 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <action android:name="android.nfc.action.TECH_DISCOVERED"/>-->
+                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"-->
-<!--                android:resource="@xml/nfc_tech_filter" />-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
     </application>
 
