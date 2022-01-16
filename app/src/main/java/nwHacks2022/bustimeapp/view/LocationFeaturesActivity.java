@@ -28,10 +28,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
+
+import javax.net.ssl.HttpsURLConnection;
+
 
 public class LocationFeaturesActivity extends AppCompatActivity {
     //    GoogleApiClient googleApiClient;
     FusedLocationProviderClient fusedLocationProviderClient;
+    String longitude = "";
+    String latitude = "";
+    StringBuilder stringBuilder = new StringBuilder();
+    InputStreamReader in = null;
+    TextView info = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +91,48 @@ public class LocationFeaturesActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                            //System.out.println(location);
-                            Log.e("Success?", String.valueOf(location));
-                            TextView info = findViewById(R.id.info_text);
-                            info.setText(String.valueOf(location));
+                    //System.out.println(location);
+                    Log.e("Success?", String.valueOf(location));
+                    info = findViewById(R.id.info_text);
+                    //info.setText(String.valueOf(location).substring(15,24));
+                    //info.setText(String.valueOf(location).substring(25,37));
+                    info.setText(String.valueOf(location).substring(15,37));
+                    latitude = String.valueOf(location).substring(15,24);
+                    longitude = String.valueOf(location).substring(25,37);
                 }
             }
         });
+
+        //try {
+        //    String baseURL = new String("https://api.translink.ca/rttiapi/v1/stops?apikey=D40X8fr5be6zO3Lqk8t9&lat=");
+        //    baseURL.concat(latitude+"&long="+longitude);
+        //    URL url = new URL(baseURL);
+        //    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        //    if (connection.getResponseCode() == 200) {
+        //        Log.e("Success.", "");
+        //        System.exit(0);
+        //    }
+        //    //if (connection != null) {
+        //    //    connection.setReadTimeout(5 * 1000);
+        //    //    if (connection.getInputStream() != null) {
+        //    //        in = new InputStreamReader(connection.getInputStream(), Charset.defaultCharset());
+        //    //        BufferedReader bufferedReader = new BufferedReader(in);
+        //    //        if (bufferedReader != null) {
+        //    //            int characterCount;
+        //    //            while ((characterCount = bufferedReader.read()) != -1) {
+        //    //                stringBuilder.append((char) characterCount);
+        //    //            }
+        //    //            bufferedReader.close();
+        //    //        }
+        //    //    }
+        //    //}
+        //in.close();
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //    System.exit(0);
+        //}
+//
+        //info.setText(stringBuilder.toString());
 
         //if (Permissions()) {
         //    return;
