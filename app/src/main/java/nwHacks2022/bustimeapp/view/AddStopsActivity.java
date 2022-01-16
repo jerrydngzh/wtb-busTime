@@ -1,14 +1,14 @@
 package nwHacks2022.bustimeapp.view;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -69,7 +69,7 @@ public class AddStopsActivity extends AppCompatActivity {
             String busNum = busNo.getText().toString();
             String busStop = busStopNo.getText().toString();
 
-            stopManager.add(new BusStop(name, Integer.parseInt(busNum), Integer.parseInt(busStop), latitude, longitude));
+            stopManager.add(new BusStop(name, busNum, busStop, latitude, longitude));
             finish();
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(AddStopsActivity.this)
