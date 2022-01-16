@@ -1,26 +1,17 @@
 package nwHacks2022.bustimeapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.auth.api.credentials.Credential;
-import com.google.android.gms.auth.api.credentials.Credentials;
-import com.google.android.gms.auth.api.credentials.CredentialsApi;
-import com.google.android.gms.auth.api.credentials.CredentialsClient;
-import com.google.android.gms.auth.api.credentials.CredentialsOptions;
-import com.google.android.gms.auth.api.credentials.HintRequest;
 
 import nwHacks2022.bustimeapp.view.AddStopsActivity;
 import nwHacks2022.bustimeapp.view.ListStopsActivity;
@@ -28,13 +19,14 @@ import nwHacks2022.bustimeapp.view.ReadNfcActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String phoneNum;
+    // TODO - remove
+    private String message = "Hi Kevin - 🅱usTimeApp";
+    private String busNum = "6044456342";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setUpButtons();
     }
 
@@ -57,65 +49,37 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // TODO - button as placeholder for sms feature
         Button sendSMSBtn = findViewById(R.id.send_sms);
-        sendSMSBtn.setOnClickListener(v -> {
-            // if permissions false, ask
-            // grab phone number
-            getDevicePhoneNumber();
-
-            // send text if has phone number
-//            if (phoneNum != null){
-//
-//            }else{
-//                Toast.makeText(this, "No phone numbers found to text the bus!", Toast.LENGTH_LONG).show();
-//            }
-
-        });
-
+        sendSMSBtn.setOnClickListener(v -> sendSMSMessage());
     }
 
-    private void getDevicePhoneNumber() {
-        requestHint();
-    }
-
-    // Construct a request for phone numbers and show the picker
-    private void requestHint() {
-        HintRequest hintRequest = new HintRequest.Builder()
-                .setPhoneNumberIdentifierSupported(true)
-                .build();
-
-        CredentialsOptions options = new CredentialsOptions.Builder()
-                .forceEnableSaveDialog()
-                .build();
-
-        CredentialsClient credentialsClient = Credentials.getClient(getApplicationContext(), options);
-        PendingIntent intent = credentialsClient.getHintPickerIntent(hintRequest);
-        try {
-            startIntentSenderForResult(
-                    intent.getIntentSender(), 1
-                    , null, 0, 0, 0, new Bundle()
-            );
-        } catch (IntentSender.SendIntentException e) {
-            e.printStackTrace();
+    // TODO - move to ListStopsActivity -> call on onClickCallBack() for listView Items
+    protected void sendSMSMessage() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
+                Toast.makeText(this, "SMS Permission is need to text the bus", Toast.LENGTH_SHORT).show();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
         }
     }
 
-    // Obtain the phone number from the result
+    // TODO - move to ListStopsActivity -> call by sendMSMMessage from onClickCallBack() for listView Items
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            // get data from the dialog
-            Credential cred = data.getParcelableExtra(Credential.EXTRA_KEY);
-
-            // set the received data t the text view
-            TextView phoneNum = findViewById(R.id.phone_num_tv);
-            phoneNum.setText(cred.getId().substring(3));
-
-        } else if (requestCode == 1 && resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
-            Toast.makeText(this, "No phone numbers found", Toast.LENGTH_LONG).show();
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(busNum, null, message, null, null);
+                //  Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            }
         }
-
     }
 }
