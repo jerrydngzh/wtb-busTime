@@ -1,12 +1,12 @@
 package nwHacks2022.bustimeapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import nwHacks2022.bustimeapp.controller.StopManager;
 import nwHacks2022.bustimeapp.view.AddStopsActivity;
@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         stopManager.load();
     }
 
-
     private void loadStops() {
         StopManager stopManager = StopManager.getInstance();
         sp = this.getSharedPreferences(STOPS_SAVE_SP, Context.MODE_PRIVATE);
@@ -63,24 +62,28 @@ public class MainActivity extends AppCompatActivity {
         addStopButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), AddStopsActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         Button listStopButton = findViewById(R.id.list_stops_btn);
         listStopButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ListStopsActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         Button readNfcButton = findViewById(R.id.read_nfc_btn);
         readNfcButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ReadNfcActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         Button locationFeaturesButton = findViewById(R.id.find_location_btn);
         locationFeaturesButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), LocationFeaturesActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
     }
 

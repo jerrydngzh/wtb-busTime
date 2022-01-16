@@ -7,18 +7,6 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/send_sms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:text="@string/send_sms_txt"
-        app:layout_constraintBottom_toTopOf="@+id/read_nfc_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextContrastCheck" />
-
-    <Button
         android:id="@+id/read_nfc_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

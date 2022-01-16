@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.util.Objects;
+
 import nwHacks2022.bustimeapp.R;
 import nwHacks2022.bustimeapp.controller.StopManager;
 import nwHacks2022.bustimeapp.model.BusStop;
@@ -28,17 +30,20 @@ public class AddStopsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stops);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.item_save) {
             saveStop();
+        } else if (item.getItemId() == R.id.item_delete) {
+            // TODO -- do smt
+        }else{
+            finish();
+            overridePendingTransition(0, 0);
         }
 
-        // TODO
-        if (item.getItemId() == R.id.item_delete) {
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -48,8 +53,14 @@ public class AddStopsActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
+
     private void getExtras() {
-        //TODO: get editing stops working.
+        //TODO: get editing bus stops working.
         Intent intent = getIntent();
         doEdit = intent.getBooleanExtra(EXTRA_DO_EDIT, false);
 
@@ -62,6 +73,7 @@ public class AddStopsActivity extends AppCompatActivity {
         EditText busNo = findViewById(R.id.bus_number_field);
         EditText busStopNo = findViewById(R.id.stop_number_field);
 
+        // TODO - adding bus stop will still save when not entering any fields, or having some blank fields
         try {
             String name = stopName.getText().toString();
             String latitude = lat.getText().toString();
@@ -71,6 +83,7 @@ public class AddStopsActivity extends AppCompatActivity {
 
             stopManager.add(new BusStop(name, busNum, busStop, latitude, longitude));
             finish();
+            overridePendingTransition(0, 0);
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(AddStopsActivity.this)
                     .setTitle("Warning")
