@@ -9,7 +9,7 @@ Where’s The Bus is the fastest way to get bus times, with the least input poss
 
 Tech used: Java, NFC API, SMSManager API, device GPS API
 
-[Project is WIP]: Future Features
+### [Project is WIP] Future Features:
 - Google Maps API integration
 - Bus Stop OCR Scanning using ML for different versions of Bus Stop signs
 - Translink API integration
