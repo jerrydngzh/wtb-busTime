@@ -1,17 +1,9 @@
 package nwHacks2022.bustimeapp;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import nwHacks2022.bustimeapp.view.AddStopsActivity;
 import nwHacks2022.bustimeapp.view.ListStopsActivity;
@@ -59,35 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO - button as placeholder for sms feature
         Button sendSMSBtn = findViewById(R.id.send_sms);
-        sendSMSBtn.setOnClickListener(v -> sendSMSMessage());
-    }
-    // TODO - move to ListStopsActivity -> call on onClickCallBack() for listView Items
-    protected void sendSMSMessage() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
-                Toast.makeText(this, "SMS Permission is need to text the bus", Toast.LENGTH_SHORT).show();
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
-        }
     }
 
-    // TODO - move to ListStopsActivity -> call by sendMSMMessage from onClickCallBack() for listView Items
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == 0) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(busNum, null, message, null, null);
-                //  Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
-            }
-        }
-
-    }
 }
