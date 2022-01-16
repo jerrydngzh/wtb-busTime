@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 import nwHacks2022.bustimeapp.controller.StopManager;
 import nwHacks2022.bustimeapp.model.BusStop;
@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setUpSaving();
+        // TODO -- deserializing/serializing failing on empty string
+//        setUpSaving();
         setUpButtons();
-        loadStops();
+//        loadStops();
     }
 
     private void setUpSaving() {
@@ -93,23 +94,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button nearbyButton = findViewById(R.id.nearby_stops_btn);
-        nearbyButton.setOnClickListener(v -> {
-            getNearbyStops();
-
-        });
+        nearbyButton.setOnClickListener(v -> getNearbyStops());
     }
 
     private void getNearbyStops() {
         StopFinder stopFinder = new StopFinder(getCurrentLocation());
         ArrayList<BusStop> nearby = stopFinder.findSavedStops();
         if (nearby.isEmpty()) {
-            Toast.makeText(this, "No nearby stops found!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No nearby stops found!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (nearby.size() == 1) {
             //TODO: don't open the activity just send the text of the only nearby bus
+
         } else {
             startActivity(ListStopsActivity.makeIntent(this, nearby));
+            overridePendingTransition(0,0);
         }
     }
 

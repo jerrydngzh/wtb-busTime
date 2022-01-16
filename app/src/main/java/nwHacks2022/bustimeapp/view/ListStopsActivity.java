@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -102,6 +101,7 @@ public class ListStopsActivity extends AppCompatActivity {
         busList.setAdapter(stopAdapter);
     }
 
+    // TODO - unused
     public static Intent makeIntent(Context context) {
         return new Intent(context, ListStopsActivity.class);
     }
@@ -137,7 +137,7 @@ public class ListStopsActivity extends AppCompatActivity {
 
     }
 
-
+    // TODO - called from createOnClickCallBack() when implemented
     protected void sendSMSMessage(String busCode) {
         message = busCode;
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {

@@ -73,7 +73,6 @@ public class AddStopsActivity extends AppCompatActivity {
         EditText busNo = findViewById(R.id.bus_number_field);
         EditText busStopNo = findViewById(R.id.stop_number_field);
 
-        // TODO - adding bus stop will still save when not entering any fields, or having some blank fields
         try {
             String name = stopName.getText().toString();
             String latitude = lat.getText().toString();
