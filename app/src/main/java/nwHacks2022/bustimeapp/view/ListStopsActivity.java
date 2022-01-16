@@ -86,12 +86,17 @@ public class ListStopsActivity extends AppCompatActivity {
             } else {
                 busStop = stopManager.get(position);
             }
-            Log.d("DEBUG", ""+busStop);
             sendSMSMessage(busStop.getBusStop() + " " + busStop.getBusNumber());
 
             Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
+            editStop.putExtra("name", busStop.getName());
+            editStop.putExtra("stopNum", busStop.getBusNumber());
+            editStop.putExtra("busStop", busStop.getBusStop());
+            editStop.putExtra("latitude", busStop.getLatitude());
+            editStop.putExtra("longitude", busStop.getLongitude());
+            editStop.putExtra("doEdit", true);
             startActivity(editStop);
-            overridePendingTransition(0, 0);
+            //overridePendingTransition(0, 0);
         });
     }
 

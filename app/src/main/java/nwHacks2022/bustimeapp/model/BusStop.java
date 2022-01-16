@@ -3,6 +3,8 @@ package nwHacks2022.bustimeapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
 import java.util.Locale;
 import java.util.UUID;
 
@@ -88,6 +90,14 @@ public class BusStop implements Parcelable {
         out.writeDouble(latitude);
         out.writeDouble(longitude);
         out.writeString(id);
+    }
+
+    public boolean equals(BusStop busStop) {
+        if (busStop.name != this.name || busStop.busNumber != this.busNumber || busStop.busStop != this.busStop
+            || busStop.latitude != this.latitude || busStop.longitude != this.longitude) {
+            return false;
+        }
+        return true;
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods

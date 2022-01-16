@@ -31,6 +31,7 @@ public class AddStopsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stops);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getExtras();
     }
 
     @Override
@@ -38,7 +39,7 @@ public class AddStopsActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.item_save) {
             saveStop();
         } else if (item.getItemId() == R.id.item_delete) {
-            // TODO -- do smt
+            deleteStop();
         }else{
             finish();
             overridePendingTransition(0, 0);
@@ -64,6 +65,25 @@ public class AddStopsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         doEdit = intent.getBooleanExtra(EXTRA_DO_EDIT, false);
 
+        setTextFields(intent.getStringExtra("name"), R.id.stop_name_field);
+        setTextFields(intent.getStringExtra("stopNum"), R.id.stop_number_field);
+        setTextFields(intent.getStringExtra("busStop"), R.id.bus_number_field);
+        setIntFields(intent.getDoubleExtra("latitude", 0), R.id.lat_field);
+        setIntFields(intent.getDoubleExtra("longitude", 0), R.id.long_field);
+    }
+
+    private void setTextFields(String toSet, int id) {
+        if (doEdit) {
+            EditText editText = this.findViewById(id);
+            editText.setText(toSet);
+        }
+    }
+
+    private void setIntFields(double toSet, int id) {
+        if (doEdit) {
+            EditText editText = this.findViewById(id);
+            editText.setText(Double.toString(toSet));
+        }
     }
 
     private void saveStop() {
@@ -90,6 +110,26 @@ public class AddStopsActivity extends AppCompatActivity {
                     .show();
         }
 
+    }
+
+    private void deleteStop() {
+        EditText stopName = findViewById(R.id.stop_name_field);
+        EditText lat = findViewById(R.id.lat_field);
+        EditText lon = findViewById(R.id.long_field);
+        EditText busNo = findViewById(R.id.bus_number_field);
+        EditText busStopNo = findViewById(R.id.stop_number_field);
+
+        try {
+            String name = stopName.getText().toString();
+            String latitude = lat.getText().toString();
+            String longitude = lon.getText().toString();
+            String busNum = busNo.getText().toString();
+            String busStop = busStopNo.getText().toString();
+
+            stopManager.deleteStop(new BusStop(name, busNum, busStop, Double.parseDouble(latitude), Double.parseDouble(longitude)));
+        } catch (Exception e) {
+            //nothing
+        }
     }
 
     // TODO - unused!
