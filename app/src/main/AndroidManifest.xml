@@ -3,9 +3,9 @@
     package="nwHacks2022.bustimeapp">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.NFC" />
-    <uses-feature android:name="android.hardware.nfc"
-        android:required="true"/>
+    <uses-feature android:name="android.hardware.nfc" android:required="true"/>
 
     <application
         android:allowBackup="true"
@@ -24,9 +24,6 @@
             android:exported="false" />
         <activity
             android:name=".view.AddStopsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.LocationFeaturesActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
