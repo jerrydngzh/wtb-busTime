@@ -3,12 +3,18 @@ package nwHacks2022.bustimeapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import nwHacks2022.bustimeapp.controller.StopManager;
+import nwHacks2022.bustimeapp.model.BusStop;
+import nwHacks2022.bustimeapp.model.StopFinder;
 import nwHacks2022.bustimeapp.view.AddStopsActivity;
 import nwHacks2022.bustimeapp.view.ListStopsActivity;
 import nwHacks2022.bustimeapp.view.LocationFeaturesActivity;
@@ -85,6 +91,34 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(0, 0);
         });
+
+        Button nearbyButton = findViewById(R.id.nearby_stops_btn);
+        nearbyButton.setOnClickListener(v -> {
+            getNearbyStops();
+
+        });
+    }
+
+    private void getNearbyStops() {
+        StopFinder stopFinder = new StopFinder(getCurrentLocation());
+        ArrayList<BusStop> nearby = stopFinder.findSavedStops();
+        if (nearby.isEmpty()) {
+            Toast.makeText(this, "No nearby stops found!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (nearby.size() == 1) {
+            //TODO: don't open the activity just send the text of the only nearby bus
+        } else {
+            startActivity(ListStopsActivity.makeIntent(this, nearby));
+        }
+    }
+
+    private Location getCurrentLocation() {
+        //TODO: hook this up so it actually works
+        Location location = new Location("test");
+        location.setLongitude(0);
+        location.setLatitude(0);
+        return location;
     }
 
 
