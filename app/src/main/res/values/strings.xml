@@ -3,4 +3,6 @@
     <string name="list_stops">List Stops</string>
     <string name="read_nfc">Read NFC</string>
     <string name="add_stop">Add Stop</string>
+    <string name="send_sms_txt">SEND SMS</string>
+    <string name="phone_num_txt_placeholder">(xxx)-xxx-xxxx</string>
 </resources>
