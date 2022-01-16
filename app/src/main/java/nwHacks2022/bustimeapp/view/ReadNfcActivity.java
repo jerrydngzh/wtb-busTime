@@ -238,6 +238,6 @@ public class ReadNfcActivity extends AppCompatActivity {
 
     public static PendingIntent makePendingIntent(Context context) {
         Intent intent = new Intent(context, ReadNfcActivity.class);
-        return PendingIntent.getActivity(context, 0, intent, 0);
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
     }
 }
