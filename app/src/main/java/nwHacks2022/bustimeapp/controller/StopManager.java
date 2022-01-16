@@ -57,6 +57,14 @@ public class StopManager {
         fromJson(saveOption.load());
     }
 
+    public void deleteStop(BusStop toDelete) {
+        for (BusStop bs : busStops) {
+            if (bs.getId().equals(toDelete.getId())) {
+                busStops.remove(bs);
+            }
+        }
+        save();
+    }
 
     public void setSaveOption(SaveManager saveInterface) {
         saveOption = saveInterface;

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,13 @@ public class ListStopsActivity extends AppCompatActivity {
 
         getExtras();
         populateBusStopListView();
-        if (!doTempList) {
-            createOnClickCallBack();
-        }
+        createOnClickCallBack();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateBusStopListView();
     }
 
     private void getExtras() {
@@ -81,12 +86,18 @@ public class ListStopsActivity extends AppCompatActivity {
         stopList.setOnItemClickListener((parent, view, position, id) -> {
 
             // TODO ?
-//            BusStop busStop = stopManager.get(position);
-//            sendSMSMessage(busStop.getBusStop() + " " + busStop.getBusNumber());
+            BusStop busStop;
+            if (doTempList) {
+                busStop = tempStopManager.get(position);
+            } else {
+                busStop = stopManager.get(position);
+            }
+            sendSMSMessage(busStop.getBusStop() + " " + busStop.getBusNumber());
 
             Intent editStop = AddStopsActivity.makeIntent(ListStopsActivity.this, position);
+            editStop.putExtra("busStop", busStop);
             startActivity(editStop);
-            overridePendingTransition(0, 0);
+            //overridePendingTransition(0, 0);
         });
     }
 

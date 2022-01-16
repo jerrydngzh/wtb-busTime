@@ -26,11 +26,14 @@ public class AddStopsActivity extends AppCompatActivity {
     StopManager stopManager = StopManager.getInstance();
     boolean doEdit = false;
 
+    BusStop busStop = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stops);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getExtras();
     }
 
     @Override
@@ -38,7 +41,7 @@ public class AddStopsActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.item_save) {
             saveStop();
         } else if (item.getItemId() == R.id.item_delete) {
-            // TODO -- do smt
+            deleteStop();
         }else{
             finish();
             overridePendingTransition(0, 0);
@@ -64,6 +67,30 @@ public class AddStopsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         doEdit = intent.getBooleanExtra(EXTRA_DO_EDIT, false);
 
+        try {
+            busStop = intent.getParcelableExtra("busStop");
+            setTextFields(busStop.getName(), R.id.stop_name_field);
+            setTextFields(busStop.getBusNumber(), R.id.stop_number_field);
+            setTextFields(busStop.getBusStop(), R.id.bus_number_field);
+            setIntFields(busStop.getLatitude(), R.id.lat_field);
+            setIntFields(busStop.getLongitude(), R.id.long_field);
+        } catch (Exception e) {
+            //nothing
+        }
+    }
+
+    private void setTextFields(String toSet, int id) {
+        if (doEdit) {
+            EditText editText = this.findViewById(id);
+            editText.setText(toSet);
+        }
+    }
+
+    private void setIntFields(double toSet, int id) {
+        if (doEdit) {
+            EditText editText = this.findViewById(id);
+            editText.setText(Double.toString(toSet));
+        }
     }
 
     private void saveStop() {
@@ -89,7 +116,15 @@ public class AddStopsActivity extends AppCompatActivity {
                     .setMessage("You have unfilled fields!")
                     .show();
         }
+    }
 
+    private void deleteStop() {
+        try {
+            stopManager.deleteStop(busStop);
+            finish();
+        } catch (Exception e) {
+            finish();
+        }
     }
 
     // TODO - unused!
