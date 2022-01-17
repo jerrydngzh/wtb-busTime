@@ -1,4 +1,4 @@
-# Where's The Bus? - nwHacks 2022 Project
+# Where's The Bus? - nwHacks 2022: MLH Best Hardware Hack Winner
 
 A niche transit app for Android which allows users to quickly get bus times by tapping their compass card to their phone. 
 This app gets the bus schedule in the shortest time possible, allowing the user to skip texting Translink or checking their mapping app.
