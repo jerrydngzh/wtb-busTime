@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button locationFeaturesButton = findViewById(R.id.find_location_btn);
         locationFeaturesButton.setOnClickListener(v -> {
+            InfoGetter.getCoodrinates(MainActivity.this, "55612");
             Intent intent = new Intent(getApplicationContext(), LocationFeaturesActivity.class);
             startActivity(intent);
             overridePendingTransition(0, 0);
@@ -137,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
     private void getNearbyStops() {
         StopFinder stopFinder = new StopFinder(getCurrentLocation());
         ArrayList<BusStop> nearbyStops = stopFinder.findSavedStops();
-
         if (nearbyStops.isEmpty()) {
             Toast.makeText(this, "No nearby stops found!", Toast.LENGTH_SHORT).show();
             return;

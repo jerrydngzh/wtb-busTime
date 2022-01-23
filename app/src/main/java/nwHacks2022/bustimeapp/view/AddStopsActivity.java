@@ -2,10 +2,15 @@ package nwHacks2022.bustimeapp.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +22,7 @@ import java.util.Objects;
 import nwHacks2022.bustimeapp.R;
 import nwHacks2022.bustimeapp.controller.StopManager;
 import nwHacks2022.bustimeapp.model.BusStop;
+import nwHacks2022.bustimeapp.model.InfoGetter;
 
 public class AddStopsActivity extends AppCompatActivity {
 
@@ -34,7 +40,10 @@ public class AddStopsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_stops);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getExtras();
+        setUpButton();
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -77,6 +86,31 @@ public class AddStopsActivity extends AppCompatActivity {
         } catch (Exception e) {
             //nothing
         }
+    }
+
+    private void setUpButton() {
+        Button findCoordinateButton = findViewById(R.id.find_coords_button);
+        findCoordinateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText stopField = findViewById(R.id.stop_number_field);
+
+                String stopNumber = stopField.getText().toString();
+                if (!stopNumber.isEmpty()) {
+                    //TODO: this currently does not work as intended because it doesn't wait for a response from the API
+                    Location busLocation = InfoGetter.getCoodrinates(AddStopsActivity.this, stopNumber);
+
+                    EditText longField  = findViewById(R.id.long_field);
+                    Log.i("From Function", busLocation.toString());
+                    longField.setText(String.valueOf(busLocation.getLongitude()));
+
+                    EditText latField  = findViewById(R.id.lat_field);
+                    latField.setText(String.valueOf(busLocation.getLatitude()));
+                } else {
+                    Toast.makeText(AddStopsActivity.this, "Please fill in the bus number!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void setTextFields(String toSet, int id) {

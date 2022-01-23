@@ -13,13 +13,13 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="@string/edit_text_hint_address"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.372"
         app:layout_constraintStart_toEndOf="@+id/busStopLocation"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:importantForAutofill="no" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/stop_number_field"
@@ -28,13 +28,13 @@
         android:layout_marginTop="41dp"
         android:ems="10"
         android:hint="@string/edit_text_hint_num"
+        android:importantForAutofill="no"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.409"
         app:layout_constraintStart_toEndOf="@+id/bus_stop_number_label"
         app:layout_constraintTop_toBottomOf="@+id/stop_name_field"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:importantForAutofill="no" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/bus_stop_number_label"
@@ -53,13 +53,13 @@
         android:layout_marginTop="43dp"
         android:ems="10"
         android:hint="@string/edit_text_hint_num"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.413"
         app:layout_constraintStart_toEndOf="@+id/bus_number_label"
         app:layout_constraintTop_toBottomOf="@+id/stop_number_field"
-        tools:ignore="SpeakableTextPresentCheck,TextFields"
-        android:importantForAutofill="no" />
+        tools:ignore="SpeakableTextPresentCheck,TextFields" />
 
     <TextView
         android:id="@+id/bus_number_label"
@@ -88,14 +88,14 @@
         android:layout_marginEnd="68dp"
         android:layout_marginBottom="16dp"
         android:ems="10"
+        android:hint="@string/edit_text_hint_num"
+        android:importantForAutofill="no"
         android:inputType="numberDecimal"
         android:minHeight="48dp"
-        android:hint="@string/edit_text_hint_num"
         app:layout_constraintBottom_toTopOf="@+id/long_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/lat_label_text"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:importantForAutofill="no" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/lat_label_text"
@@ -114,15 +114,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="79dp"
         android:ems="10"
+        android:hint="@string/edit_text_hint_num"
+        android:importantForAutofill="no"
         android:inputType="numberDecimal"
         android:minHeight="48dp"
-        android:hint="@string/edit_text_hint_num"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toEndOf="@+id/long_label_text"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:importantForAutofill="no" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/long_label_text"
@@ -143,5 +143,16 @@
         android:text="@string/bus_stop_location_labal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/find_coords_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Find From Bus Number"
+        app:layout_constraintBottom_toTopOf="@+id/lat_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
