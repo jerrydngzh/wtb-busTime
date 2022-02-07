@@ -88,7 +88,7 @@ public class ListStopsActivity extends AppCompatActivity {
             }
 
             try {
-                InfoGetter.sendMessage(busStop.getBusStop() + " " + busStop.getBusNumber());
+//                InfoGetter.sendMessage(busStop.getBusStop() + " " + busStop.getBusNumber());
             } catch (Exception e) {
                 new MaterialAlertDialogBuilder(ListStopsActivity.this)
                         .setTitle("Error")

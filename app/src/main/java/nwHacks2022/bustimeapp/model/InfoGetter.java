@@ -37,7 +37,7 @@ public class InfoGetter {
         }
     }
 
-    public static Location getCoodrinates(Context context, String stopNumber) {
+    public static void getCoodrinates(Context context, String stopNumber, busLocationListener listener) {
 
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = (String.format("https://api.translink.ca/rttiapi/v1/stops/%s?apikey=%s", stopNumber, apiKey));
@@ -54,6 +54,8 @@ public class InfoGetter {
 
                     busLocation.setLongitude(stopLong);
                     busLocation.setLatitude(stopLat);
+
+                    listener.onResponse(busLocation);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -78,8 +80,12 @@ public class InfoGetter {
 
 
         queue.add(jsonObjectRequest);
+    }
 
-        return busLocation;
+    public interface busLocationListener {
+        void onError(String message);
+
+        void onResponse(Location busLocation);
     }
 
 }

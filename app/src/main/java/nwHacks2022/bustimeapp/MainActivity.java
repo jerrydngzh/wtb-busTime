@@ -5,16 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.location.LocationRequest;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.SectionIndexer;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
@@ -125,21 +133,22 @@ public class MainActivity extends AppCompatActivity {
 
         Button locationFeaturesButton = findViewById(R.id.find_location_btn);
         locationFeaturesButton.setOnClickListener(v -> {
-            InfoGetter.getCoodrinates(MainActivity.this, "55612");
+//            InfoGetter.getCoodrinates(MainActivity.this, "55612");
             Intent intent = new Intent(getApplicationContext(), LocationFeaturesActivity.class);
             startActivity(intent);
             overridePendingTransition(0, 0);
         });
 
         Button nearbyButton = findViewById(R.id.nearby_stops_btn);
-        nearbyButton.setOnClickListener(v -> getNearbyStops());
+        nearbyButton.setOnClickListener(v -> getCurrentLocation());
     }
 
-    private void getNearbyStops() {
-        StopFinder stopFinder = new StopFinder(getCurrentLocation());
+    private void getNearbyStops(Location deviceLocation) {
+        StopFinder stopFinder = new StopFinder(deviceLocation);
         ArrayList<BusStop> nearbyStops = stopFinder.findSavedStops();
         if (nearbyStops.isEmpty()) {
             Toast.makeText(this, "No nearby stops found!", Toast.LENGTH_SHORT).show();
+            Log.d("getNearbyStops", "No Nearby Stops Found");
             return;
         }
         Log.d("getNearbyStops", "TEST");
@@ -149,26 +158,49 @@ public class MainActivity extends AppCompatActivity {
             BusStop busStop = nearbyStops.get(0);
             try {
                 InfoGetter.sendMessage(busStop.getBusStop() + " " + busStop.getBusNumber());
+                Log.d("getNearbyStops", "Message Sent!");
             } catch (Exception e) {
                 new MaterialAlertDialogBuilder(MainActivity.this)
                         .setTitle("Error")
                         .setMessage("Unable to send text message")
                         .setPositiveButton(android.R.string.ok, null)
                         .show();
+                Log.d("getNearbyStops", "Message failed to send");
             }
 
         } else {
             startActivity(ListStopsActivity.makeIntent(this, nearbyStops));
             overridePendingTransition(0,0);
+            Log.d("getNearbyStops", "Too many nearby busses");
         }
     }
 
-    private Location getCurrentLocation() {
-        //TODO: hook this up so it actually works
-        Location location = new Location("test");
-        location.setLongitude(0);
-        location.setLatitude(0);
-        return location;
+    private void getCurrentLocation() {
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        try {
+            fusedLocationProviderClient.getCurrentLocation(LocationRequest.QUALITY_HIGH_ACCURACY, new CancellationToken() {
+                @NonNull
+                @Override
+                public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
+                    return null;
+                }
+
+                @Override
+                public boolean isCancellationRequested() {
+                    return false;
+                }
+            }).addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    Log.d("LOCATION", Double.toString(location.getLatitude()) + Double.toString(location.getLongitude()));
+                    getNearbyStops(location);
+                }
+            });
+
+        }catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -195,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             Log.d("resolveIntent", "TEST");
-            getNearbyStops();
+            getCurrentLocation();
         }
     }
 

@@ -90,25 +90,31 @@ public class AddStopsActivity extends AppCompatActivity {
 
     private void setUpButton() {
         Button findCoordinateButton = findViewById(R.id.find_coords_button);
-        findCoordinateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText stopField = findViewById(R.id.stop_number_field);
+        findCoordinateButton.setOnClickListener(v -> {
+            EditText stopField = findViewById(R.id.stop_number_field);
 
-                String stopNumber = stopField.getText().toString();
-                if (!stopNumber.isEmpty()) {
-                    //TODO: this currently does not work as intended because it doesn't wait for a response from the API
-                    Location busLocation = InfoGetter.getCoodrinates(AddStopsActivity.this, stopNumber);
+            String stopNumber = stopField.getText().toString();
+            if (!stopNumber.isEmpty()) {
+                //TODO: this currently does not work as intended because it doesn't wait for a response from the API
+                InfoGetter.getCoodrinates(AddStopsActivity.this, stopNumber, new InfoGetter.busLocationListener() {
+                    @Override
+                    public void onError(String message) {
 
-                    EditText longField  = findViewById(R.id.long_field);
-                    Log.i("From Function", busLocation.toString());
-                    longField.setText(String.valueOf(busLocation.getLongitude()));
+                    }
 
-                    EditText latField  = findViewById(R.id.lat_field);
-                    latField.setText(String.valueOf(busLocation.getLatitude()));
-                } else {
-                    Toast.makeText(AddStopsActivity.this, "Please fill in the bus number!", Toast.LENGTH_LONG).show();
-                }
+                    @Override
+                    public void onResponse(Location busLocation) {
+                        EditText longField  = findViewById(R.id.long_field);
+                        Log.i("From Function", busLocation.toString());
+                        longField.setText(String.valueOf(busLocation.getLongitude()));
+
+                        EditText latField  = findViewById(R.id.lat_field);
+                        latField.setText(String.valueOf(busLocation.getLatitude()));
+                    }
+                });
+
+            } else {
+                Toast.makeText(AddStopsActivity.this, "Please fill in the bus number!", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -173,4 +179,6 @@ public class AddStopsActivity extends AppCompatActivity {
 
         return editStopIntent;
     }
+
 }
+
